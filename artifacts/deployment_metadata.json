@@ -1,0 +1,51 @@
+{
+  "model_name": "Logistic_Regression_Calibrated",
+  "model_version": "1.0.0",
+  "optimal_threshold": 0.01,
+  "training_date": "2026-09-07 16:51:59",
+  "feature_columns": [
+    "order_count",
+    "total_orders",
+    "total_items",
+    "avg_items_per_order",
+    "std_items_per_order",
+    "total_spend",
+    "avg_spend_per_order",
+    "max_order_value",
+    "min_order_value",
+    "first_purchase_date",
+    "last_purchase_date",
+    "days_since_last_purchase",
+    "customer_lifetime_days",
+    "order_frequency_days",
+    "avg_days_between_orders",
+    "avg_basket_size",
+    "unique_products_bought",
+    "product_diversity",
+    "pct_drink",
+    "pct_food",
+    "pct_gift",
+    "pct_household",
+    "pct_office",
+    "pct_other",
+    "top_country"
+  ],
+  "n_features": 25,
+  "n_train_samples": 2324,
+  "performance_metrics": {
+    "pr_auc": 0.7803,
+    "roc_auc": 0.7191,
+    "brier": 0.209
+  },
+  "cost_assumptions": {
+    "coupon_cost": 4.0,
+    "retained_customer_value": 180.0
+  },
+  "expected_profit": {
+    "at_optimal_threshold": 100232,
+    "at_default_threshold_0.5": 72032,
+    "improvement": 28200
+  },
+  "calibration_method": "Platt scaling (sigmoid)",
+  "status": "ready_for_deployment"
+}

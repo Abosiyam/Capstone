@@ -1,0 +1,26 @@
+{
+  "best_models": [
+    "Gradient Boosting",
+    "Logistic Regression"
+  ],
+  "best_params": {
+    "Gradient Boosting": {
+      "n_estimators": 230,
+      "learning_rate": 0.010081971997160852,
+      "max_depth": 5,
+      "subsample": 0.7356056577882386,
+      "min_samples_split": 15,
+      "min_samples_leaf": 8
+    },
+    "Logistic Regression": {
+      "C": 0.018740062625666427,
+      "solver": "lbfgs",
+      "max_iter": 190
+    }
+  },
+  "n_features": 25,
+  "n_train_samples": 2324,
+  "n_test_samples": 997,
+  "train_positive_rate": 0.580895008605852,
+  "test_positive_rate": 0.5807422266800402
+}

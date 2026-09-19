@@ -1,0 +1,17 @@
+{
+  "optimal_threshold": 0.01,
+  "max_profit": 100232.0,
+  "default_threshold": 0.5,
+  "default_profit": 72032.0,
+  "profit_improvement": 28200.0,
+  "cost_coupon": 4.0,
+  "value_retained": 180.0,
+  "tp_optimal": 579,
+  "fp_optimal": 418,
+  "tn_optimal": 0,
+  "fn_optimal": 0,
+  "tp_default": 413,
+  "fp_default": 164,
+  "tn_default": 254,
+  "fn_default": 166
+}
