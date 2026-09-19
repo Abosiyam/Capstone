@@ -5,7 +5,7 @@
 import joblib
 import pandas as pd
 from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict
 from typing import List
 import json
 from pathlib import Path
@@ -24,36 +24,35 @@ optimal_threshold = metadata['optimal_threshold']
 
 print(f"✅ Model loaded: {len(feature_columns)} features, threshold={optimal_threshold}")
 
-# ---------- 2. Request schema ----------
+# ---------- 2. Request schema (matches the 25 model features) ----------
 class CustomerFeatures(BaseModel):
     model_config = ConfigDict(extra='forbid')
 
-    order_count: float = Field(..., description="Number of orders")
-    total_orders: float = Field(..., description="Total orders (alias)")
-    total_items: float = Field(..., description="Total items purchased")
-    avg_items_per_order: float = Field(..., description="Average items per order")
-    std_items_per_order: float = Field(..., description="Std dev of items per order")
-    total_spend: float = Field(..., description="Total spend in £")
-    avg_spend_per_order: float = Field(..., description="Average spend per order")
-    max_order_value: float = Field(..., description="Maximum order value")
-    min_order_value: float = Field(..., description="Minimum order value")
-    days_since_last_purchase: float = Field(..., description="Days since last purchase")
-    customer_lifetime_days: float = Field(..., description="Customer lifetime in days")
-    days_between_first_last: float = Field(..., description="Days between first and last purchase")
-    order_frequency_days: float = Field(..., description="Average days between orders")
-    avg_days_between_orders: float = Field(..., description="Average days between orders (alias)")
-    avg_basket_size: float = Field(..., description="Average basket size")
-    unique_products_bought: float = Field(..., description="Unique products bought")
-    product_diversity: float = Field(..., description="Product diversity (unique/total)")
-    pct_drink: float = Field(..., description="Percentage of drink purchases")
-    pct_food: float = Field(..., description="Percentage of food purchases")
-    pct_gift: float = Field(..., description="Percentage of gift purchases")
-    pct_household: float = Field(..., description="Percentage of household purchases")
-    pct_office: float = Field(..., description="Percentage of office purchases")
-    pct_other: float = Field(..., description="Percentage of other purchases")
-    category_entropy: float = Field(..., description="Category diversity (entropy)")
-    first_purchase_season_encoded: float = Field(..., description="Season of first purchase (0-3)")
-    top_country: str = Field(..., description="Most frequent country")
+    order_count: float
+    total_orders: float
+    total_items: float
+    avg_items_per_order: float
+    std_items_per_order: float
+    total_spend: float
+    avg_spend_per_order: float
+    max_order_value: float
+    min_order_value: float
+    first_purchase_date: str
+    last_purchase_date: str
+    days_since_last_purchase: float
+    customer_lifetime_days: float
+    order_frequency_days: float
+    avg_days_between_orders: float
+    avg_basket_size: float
+    unique_products_bought: float
+    product_diversity: float
+    pct_drink: float
+    pct_food: float
+    pct_gift: float
+    pct_household: float
+    pct_office: float
+    pct_other: float
+    top_country: str
 
 # ---------- 3. FastAPI app ----------
 app = FastAPI(title="Boréal Marche Retention API", version="1.0.0")
@@ -76,15 +75,23 @@ async def predict(customer: CustomerFeatures):
     try:
         data = customer.model_dump()
         X = pd.DataFrame([data])
+
+        # Check for missing columns
+        missing = [col for col in feature_columns if col not in X.columns]
+        if missing:
+            raise ValueError(f"Missing columns: {missing}")
+
         X = X[feature_columns]
         prob = model.predict_proba(X)[0][1]
         decision = "Send coupon" if prob >= optimal_threshold else "No coupon"
+
         return {
             "probability": round(float(prob), 4),
             "threshold": optimal_threshold,
             "decision": decision
         }
     except Exception as e:
+        print(f"Prediction error: {e}")
         raise HTTPException(status_code=400, detail=str(e))
 
 @app.post("/predict/batch")
