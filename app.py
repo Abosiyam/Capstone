@@ -56,7 +56,8 @@ class CustomerFeatures(BaseModel):
 
 # ---------- 3. FastAPI app ----------
 app = FastAPI(title="Boréal Marche Retention API", version="1.0.0")
-@app.get("/")
+
+@app.api_route("/", methods=["GET", "HEAD"])
 async def root():
     return {
         "message": "Boréal Marché Retention API",
@@ -64,7 +65,8 @@ async def root():
         "health": "/health",
         "version": "1.0.0"
     }
-@app.get("/health")
+
+@app.api_route("/health", methods=["GET", "HEAD"])
 async def health():
     return {"status": "healthy"}
 
