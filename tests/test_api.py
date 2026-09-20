@@ -33,7 +33,7 @@ def build_valid_customer():
 
 # ---------- Test /health ----------
 def test_health():
-    response = client.get("/health")
+    response = client.get("/status")
     assert response.status_code == 200
     assert response.json() == {"status": "healthy"}
 
