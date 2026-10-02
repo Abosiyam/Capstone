@@ -1,5 +1,5 @@
 # ============================================================================
-# app.py – FastAPI for Boréal Marché Retention Model
+# app.py – FastAPI for Boréal Marché Retention + Recommendation
 # ============================================================================
 
 import joblib
@@ -9,22 +9,50 @@ from pydantic import BaseModel, ConfigDict
 from typing import List
 import json
 from pathlib import Path
+from contextlib import asynccontextmanager
 
-# ---------- 1. Load model and metadata ----------
-MODEL_PATH = Path('artifacts/final_model.joblib')
-METADATA_PATH = Path('artifacts/deployment_metadata.json')
+from src.recommendation_engine import RecommendationEngine
 
-model = joblib.load(MODEL_PATH)
+# ---------- Global objects ----------
+ml_bundle = {}
 
-with open(METADATA_PATH, 'r') as f:
-    metadata = json.load(f)
 
-feature_columns = metadata['feature_columns']
-optimal_threshold = metadata['optimal_threshold']
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """Load model and rules ONCE at startup."""
+    print("=" * 60)
+    print("🚀 Starting Boréal Marché API")
+    print("=" * 60)
 
-print(f"✅ Model loaded: {len(feature_columns)} features, threshold={optimal_threshold}")
+    MODEL_PATH = Path('artifacts/final_model.joblib')
+    METADATA_PATH = Path('artifacts/deployment_metadata.json')
 
-# ---------- 2. Request schema (matches the 25 model features) ----------
+    ml_bundle['model'] = joblib.load(MODEL_PATH)
+    with open(METADATA_PATH, 'r') as f:
+        metadata = json.load(f)
+
+    ml_bundle['feature_columns'] = metadata['feature_columns']
+    ml_bundle['optimal_threshold'] = metadata['optimal_threshold']
+
+    print(f"✅ Model loaded: {len(ml_bundle['feature_columns'])} features, threshold={ml_bundle['optimal_threshold']}")
+
+    ml_bundle['engine'] = RecommendationEngine()
+    print("✅ Recommendation engine loaded")
+    print("=" * 60)
+
+    yield
+
+    print("🛑 Shutting down...")
+
+
+app = FastAPI(
+    title="Boréal Marche Retention + Recommendation API",
+    version="1.2.0",
+    lifespan=lifespan
+)
+
+
+# ---------- Schemas ----------
 class CustomerFeatures(BaseModel):
     model_config = ConfigDict(extra='forbid')
 
@@ -54,30 +82,40 @@ class CustomerFeatures(BaseModel):
     pct_other: float
     top_country: str
 
-# ---------- 3. FastAPI app ----------
-app = FastAPI(title="Boréal Marche Retention API", version="1.0.0")
 
+class RecommendRequest(BaseModel):
+    model_config = ConfigDict(extra='forbid')
+    basket: List[str]
+    n: int = 5
+
+
+# ---------- Endpoints ----------
 @app.api_route("/", methods=["GET", "HEAD"])
 async def root():
     return {
-        "message": "Boréal Marché Retention API",
+        "message": "Boréal Marché Retention + Recommendation API",
         "docs": "/docs",
-        "health": "/health",
-        "version": "1.0.0"
+        "status": "/status",
+        "predict": "/predict",
+        "recommend": "/recommend",
+        "version": "1.2.0"
     }
+
 
 @app.api_route("/status", methods=["GET", "HEAD"])
 async def status():
     return {"status": "healthy"}
 
+
 @app.get("/info")
 async def info():
     return {
-        "model": "Logistic_Regression_Calibrated",
-        "version": metadata.get("model_version", "1.0.0"),
-        "n_features": len(feature_columns),
-        "optimal_threshold": optimal_threshold
+        "retention_model": "Logistic_Regression_Calibrated",
+        "n_features": len(ml_bundle['feature_columns']),
+        "optimal_threshold": ml_bundle['optimal_threshold'],
+        "recommendation_engine": ml_bundle['engine'].stats()
     }
+
 
 @app.post("/predict")
 async def predict(customer: CustomerFeatures):
@@ -85,23 +123,22 @@ async def predict(customer: CustomerFeatures):
         data = customer.model_dump()
         X = pd.DataFrame([data])
 
-        # Check for missing columns
-        missing = [col for col in feature_columns if col not in X.columns]
+        missing = [c for c in ml_bundle['feature_columns'] if c not in X.columns]
         if missing:
             raise ValueError(f"Missing columns: {missing}")
 
-        X = X[feature_columns]
-        prob = model.predict_proba(X)[0][1]
-        decision = "Send coupon" if prob >= optimal_threshold else "No coupon"
+        X = X[ml_bundle['feature_columns']]
+        prob = ml_bundle['model'].predict_proba(X)[0][1]
+        decision = "Send coupon" if prob >= ml_bundle['optimal_threshold'] else "No coupon"
 
         return {
             "probability": round(float(prob), 4),
-            "threshold": optimal_threshold,
+            "threshold": ml_bundle['optimal_threshold'],
             "decision": decision
         }
     except Exception as e:
-        print(f"Prediction error: {e}")
         raise HTTPException(status_code=400, detail=str(e))
+
 
 @app.post("/predict/batch")
 async def predict_batch(customers: List[CustomerFeatures]):
@@ -109,16 +146,24 @@ async def predict_batch(customers: List[CustomerFeatures]):
         results = []
         for customer in customers:
             data = customer.model_dump()
-            X = pd.DataFrame([data])
-            X = X[feature_columns]
-            prob = model.predict_proba(X)[0][1]
-            decision = "Send coupon" if prob >= optimal_threshold else "No coupon"
+            X = pd.DataFrame([data])[ml_bundle['feature_columns']]
+            prob = ml_bundle['model'].predict_proba(X)[0][1]
+            decision = "Send coupon" if prob >= ml_bundle['optimal_threshold'] else "No coupon"
             results.append({"probability": round(float(prob), 4), "decision": decision})
         return {"results": results}
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
-# ---------- 4. Run ----------
+
+@app.post("/recommend")
+async def recommend(request: RecommendRequest):
+    try:
+        return ml_bundle['engine'].recommend(request.basket, n=request.n)
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+
+# ---------- Run ----------
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)

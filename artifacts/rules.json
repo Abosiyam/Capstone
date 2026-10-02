@@ -1,0 +1,619 @@
+{
+  "metadata": {
+    "mining_date": "2026-10-02 17:58:07",
+    "source_data": "..\\data\\silver\\online_retail_ii_clean.parquet",
+    "min_support": 0.02,
+    "min_confidence": 0.3,
+    "min_lift": 1.5,
+    "rule_count": 55,
+    "apriori_time_seconds": 1.66,
+    "fpgrowth_time_seconds": 1.58
+  },
+  "rules": [
+    {
+      "antecedents": [
+        "84997C"
+      ],
+      "consequents": [
+        "84997D"
+      ],
+      "support": 0.020819,
+      "confidence": 0.680272,
+      "lift": 22.265874
+    },
+    {
+      "antecedents": [
+        "84997D"
+      ],
+      "consequents": [
+        "84997C"
+      ],
+      "support": 0.020819,
+      "confidence": 0.681431,
+      "lift": 22.265874
+    },
+    {
+      "antecedents": [
+        "84997B"
+      ],
+      "consequents": [
+        "84997C"
+      ],
+      "support": 0.020039,
+      "confidence": 0.616987,
+      "lift": 20.160161
+    },
+    {
+      "antecedents": [
+        "84997C"
+      ],
+      "consequents": [
+        "84997B"
+      ],
+      "support": 0.020039,
+      "confidence": 0.654762,
+      "lift": 20.160161
+    },
+    {
+      "antecedents": [
+        "20724"
+      ],
+      "consequents": [
+        "22356"
+      ],
+      "support": 0.020195,
+      "confidence": 0.50194,
+      "lift": 15.283332
+    },
+    {
+      "antecedents": [
+        "22356"
+      ],
+      "consequents": [
+        "20724"
+      ],
+      "support": 0.020195,
+      "confidence": 0.614897,
+      "lift": 15.283332
+    },
+    {
+      "antecedents": [
+        "82494L"
+      ],
+      "consequents": [
+        "82482"
+      ],
+      "support": 0.028835,
+      "confidence": 0.549058,
+      "lift": 12.896162
+    },
+    {
+      "antecedents": [
+        "82482"
+      ],
+      "consequents": [
+        "82494L"
+      ],
+      "support": 0.028835,
+      "confidence": 0.677262,
+      "lift": 12.896162
+    },
+    {
+      "antecedents": [
+        "21232"
+      ],
+      "consequents": [
+        "21231"
+      ],
+      "support": 0.032374,
+      "confidence": 0.465918,
+      "lift": 11.078806
+    },
+    {
+      "antecedents": [
+        "21231"
+      ],
+      "consequents": [
+        "21232"
+      ],
+      "support": 0.032374,
+      "confidence": 0.769802,
+      "lift": 11.078806
+    },
+    {
+      "antecedents": [
+        "22114"
+      ],
+      "consequents": [
+        "22112"
+      ],
+      "support": 0.020091,
+      "confidence": 0.458977,
+      "lift": 11.009155
+    },
+    {
+      "antecedents": [
+        "22112"
+      ],
+      "consequents": [
+        "22114"
+      ],
+      "support": 0.020091,
+      "confidence": 0.481898,
+      "lift": 11.009155
+    },
+    {
+      "antecedents": [
+        "22470"
+      ],
+      "consequents": [
+        "22469"
+      ],
+      "support": 0.025556,
+      "confidence": 0.492477,
+      "lift": 10.826051
+    },
+    {
+      "antecedents": [
+        "22469"
+      ],
+      "consequents": [
+        "22470"
+      ],
+      "support": 0.025556,
+      "confidence": 0.561785,
+      "lift": 10.826051
+    },
+    {
+      "antecedents": [
+        "22382"
+      ],
+      "consequents": [
+        "22383"
+      ],
+      "support": 0.024723,
+      "confidence": 0.497904,
+      "lift": 9.70205
+    },
+    {
+      "antecedents": [
+        "22383"
+      ],
+      "consequents": [
+        "22382"
+      ],
+      "support": 0.024723,
+      "confidence": 0.481744,
+      "lift": 9.70205
+    },
+    {
+      "antecedents": [
+        "21755"
+      ],
+      "consequents": [
+        "21754"
+      ],
+      "support": 0.027169,
+      "confidence": 0.550053,
+      "lift": 9.001842
+    },
+    {
+      "antecedents": [
+        "21754"
+      ],
+      "consequents": [
+        "21755"
+      ],
+      "support": 0.027169,
+      "confidence": 0.444634,
+      "lift": 9.001842
+    },
+    {
+      "antecedents": [
+        "22383"
+      ],
+      "consequents": [
+        "22384"
+      ],
+      "support": 0.021704,
+      "confidence": 0.422921,
+      "lift": 8.756012
+    },
+    {
+      "antecedents": [
+        "22384"
+      ],
+      "consequents": [
+        "22383"
+      ],
+      "support": 0.021704,
+      "confidence": 0.449353,
+      "lift": 8.756012
+    },
+    {
+      "antecedents": [
+        "22384"
+      ],
+      "consequents": [
+        "22382"
+      ],
+      "support": 0.020819,
+      "confidence": 0.431034,
+      "lift": 8.680781
+    },
+    {
+      "antecedents": [
+        "22382"
+      ],
+      "consequents": [
+        "22384"
+      ],
+      "support": 0.020819,
+      "confidence": 0.419287,
+      "lift": 8.680781
+    },
+    {
+      "antecedents": [
+        "21977"
+      ],
+      "consequents": [
+        "84991"
+      ],
+      "support": 0.024359,
+      "confidence": 0.50431,
+      "lift": 8.529326
+    },
+    {
+      "antecedents": [
+        "84991"
+      ],
+      "consequents": [
+        "21977"
+      ],
+      "support": 0.024359,
+      "confidence": 0.411972,
+      "lift": 8.529326
+    },
+    {
+      "antecedents": [
+        "20727"
+      ],
+      "consequents": [
+        "22384"
+      ],
+      "support": 0.020091,
+      "confidence": 0.396711,
+      "lift": 8.213375
+    },
+    {
+      "antecedents": [
+        "22384"
+      ],
+      "consequents": [
+        "20727"
+      ],
+      "support": 0.020091,
+      "confidence": 0.415948,
+      "lift": 8.213375
+    },
+    {
+      "antecedents": [
+        "20726"
+      ],
+      "consequents": [
+        "20725"
+      ],
+      "support": 0.022693,
+      "confidence": 0.552598,
+      "lift": 8.05544
+    },
+    {
+      "antecedents": [
+        "20725"
+      ],
+      "consequents": [
+        "20726"
+      ],
+      "support": 0.022693,
+      "confidence": 0.330804,
+      "lift": 8.05544
+    },
+    {
+      "antecedents": [
+        "22384"
+      ],
+      "consequents": [
+        "20725"
+      ],
+      "support": 0.026597,
+      "confidence": 0.550647,
+      "lift": 8.02699
+    },
+    {
+      "antecedents": [
+        "20725"
+      ],
+      "consequents": [
+        "22384"
+      ],
+      "support": 0.026597,
+      "confidence": 0.387709,
+      "lift": 8.02699
+    },
+    {
+      "antecedents": [
+        "20727"
+      ],
+      "consequents": [
+        "22383"
+      ],
+      "support": 0.020455,
+      "confidence": 0.403905,
+      "lift": 7.870421
+    },
+    {
+      "antecedents": [
+        "22383"
+      ],
+      "consequents": [
+        "20727"
+      ],
+      "support": 0.020455,
+      "confidence": 0.39858,
+      "lift": 7.870421
+    },
+    {
+      "antecedents": [
+        "20725"
+      ],
+      "consequents": [
+        "20728"
+      ],
+      "support": 0.02363,
+      "confidence": 0.344461,
+      "lift": 7.767764
+    },
+    {
+      "antecedents": [
+        "20728"
+      ],
+      "consequents": [
+        "20725"
+      ],
+      "support": 0.02363,
+      "confidence": 0.532864,
+      "lift": 7.767764
+    },
+    {
+      "antecedents": [
+        "20725"
+      ],
+      "consequents": [
+        "20727"
+      ],
+      "support": 0.026336,
+      "confidence": 0.383915,
+      "lift": 7.580842
+    },
+    {
+      "antecedents": [
+        "20727"
+      ],
+      "consequents": [
+        "20725"
+      ],
+      "support": 0.026336,
+      "confidence": 0.520041,
+      "lift": 7.580842
+    },
+    {
+      "antecedents": [
+        "21977"
+      ],
+      "consequents": [
+        "21212"
+      ],
+      "support": 0.027481,
+      "confidence": 0.568966,
+      "lift": 7.182349
+    },
+    {
+      "antecedents": [
+        "21212"
+      ],
+      "consequents": [
+        "21977"
+      ],
+      "support": 0.027481,
+      "confidence": 0.346912,
+      "lift": 7.182349
+    },
+    {
+      "antecedents": [
+        "85099B"
+      ],
+      "consequents": [
+        "85099F"
+      ],
+      "support": 0.028574,
+      "confidence": 0.321429,
+      "lift": 7.04978
+    },
+    {
+      "antecedents": [
+        "85099F"
+      ],
+      "consequents": [
+        "85099B"
+      ],
+      "support": 0.028574,
+      "confidence": 0.626712,
+      "lift": 7.04978
+    },
+    {
+      "antecedents": [
+        "20725"
+      ],
+      "consequents": [
+        "22383"
+      ],
+      "support": 0.024463,
+      "confidence": 0.356601,
+      "lift": 6.948654
+    },
+    {
+      "antecedents": [
+        "22383"
+      ],
+      "consequents": [
+        "20725"
+      ],
+      "support": 0.024463,
+      "confidence": 0.476673,
+      "lift": 6.948654
+    },
+    {
+      "antecedents": [
+        "84991"
+      ],
+      "consequents": [
+        "21212"
+      ],
+      "support": 0.031281,
+      "confidence": 0.529049,
+      "lift": 6.678465
+    },
+    {
+      "antecedents": [
+        "21212"
+      ],
+      "consequents": [
+        "84991"
+      ],
+      "support": 0.031281,
+      "confidence": 0.394875,
+      "lift": 6.678465
+    },
+    {
+      "antecedents": [
+        "20725"
+      ],
+      "consequents": [
+        "22382"
+      ],
+      "support": 0.022589,
+      "confidence": 0.329287,
+      "lift": 6.631643
+    },
+    {
+      "antecedents": [
+        "22382"
+      ],
+      "consequents": [
+        "20725"
+      ],
+      "support": 0.022589,
+      "confidence": 0.454927,
+      "lift": 6.631643
+    },
+    {
+      "antecedents": [
+        "22386"
+      ],
+      "consequents": [
+        "85099B"
+      ],
+      "support": 0.02769,
+      "confidence": 0.580153,
+      "lift": 6.526038
+    },
+    {
+      "antecedents": [
+        "85099B"
+      ],
+      "consequents": [
+        "22386"
+      ],
+      "support": 0.02769,
+      "confidence": 0.311475,
+      "lift": 6.526038
+    },
+    {
+      "antecedents": [
+        "85099C"
+      ],
+      "consequents": [
+        "85099B"
+      ],
+      "support": 0.023526,
+      "confidence": 0.552567,
+      "lift": 6.215734
+    },
+    {
+      "antecedents": [
+        "21931"
+      ],
+      "consequents": [
+        "85099B"
+      ],
+      "support": 0.025764,
+      "confidence": 0.512953,
+      "lift": 5.770125
+    },
+    {
+      "antecedents": [
+        "22411"
+      ],
+      "consequents": [
+        "85099B"
+      ],
+      "support": 0.021392,
+      "confidence": 0.446254,
+      "lift": 5.019836
+    },
+    {
+      "antecedents": [
+        "21733"
+      ],
+      "consequents": [
+        "85123A"
+      ],
+      "support": 0.037579,
+      "confidence": 0.726358,
+      "lift": 4.619503
+    },
+    {
+      "antecedents": [
+        "20725"
+      ],
+      "consequents": [
+        "85099B"
+      ],
+      "support": 0.021652,
+      "confidence": 0.31563,
+      "lift": 3.550465
+    },
+    {
+      "antecedents": [
+        "82494L"
+      ],
+      "consequents": [
+        "85123A"
+      ],
+      "support": 0.023005,
+      "confidence": 0.438057,
+      "lift": 2.785964
+    },
+    {
+      "antecedents": [
+        "21754"
+      ],
+      "consequents": [
+        "85123A"
+      ],
+      "support": 0.020351,
+      "confidence": 0.333049,
+      "lift": 2.118132
+    }
+  ]
+}

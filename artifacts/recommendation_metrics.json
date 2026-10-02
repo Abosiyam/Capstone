@@ -1,0 +1,11 @@
+{
+  "total_baskets": 19213,
+  "total_products": 4017,
+  "apriori_time_seconds": 1.66,
+  "fpgrowth_time_seconds": 1.58,
+  "rule_count_before_lift": 55,
+  "rule_count_after_lift": 55,
+  "min_support": 0.02,
+  "min_confidence": 0.3,
+  "min_lift": 1.5
+}
