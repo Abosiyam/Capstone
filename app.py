@@ -1,29 +1,34 @@
 # ============================================================================
-# app.py – FastAPI for Boréal Marché Retention + Recommendation
+# app.py – FastAPI for Boréal Marché Retention + Recommendation + Assistant
 # ============================================================================
+
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).parent))
 
 import joblib
 import pandas as pd
 from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel, ConfigDict
-from typing import List
+from pydantic import BaseModel, ConfigDict, Field
+from typing import List, Literal, Optional
 import json
-from pathlib import Path
 from contextlib import asynccontextmanager
 
 from src.recommendation_engine import RecommendationEngine
+from src.assistant import ask as assistant_ask, AssistantResponse
 
-# ---------- Global objects ----------
+# ---------- Global objects (loaded once at startup) ----------
 ml_bundle = {}
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    """Load model and rules ONCE at startup."""
+    """Load model, rules, and assistant ONCE at startup."""
     print("=" * 60)
-    print("🚀 Starting Boréal Marché API")
+    print("🚀 Starting Boréal Marché API (Head A + B + C)")
     print("=" * 60)
 
+    # ---------- Load retention model ----------
     MODEL_PATH = Path('artifacts/final_model.joblib')
     METADATA_PATH = Path('artifacts/deployment_metadata.json')
 
@@ -34,10 +39,13 @@ async def lifespan(app: FastAPI):
     ml_bundle['feature_columns'] = metadata['feature_columns']
     ml_bundle['optimal_threshold'] = metadata['optimal_threshold']
 
-    print(f"✅ Model loaded: {len(ml_bundle['feature_columns'])} features, threshold={ml_bundle['optimal_threshold']}")
+    print(f"✅ Model loaded: {len(ml_bundle['feature_columns'])} features, "
+          f"threshold={ml_bundle['optimal_threshold']}")
 
+    # ---------- Load recommendation engine ----------
     ml_bundle['engine'] = RecommendationEngine()
     print("✅ Recommendation engine loaded")
+
     print("=" * 60)
 
     yield
@@ -45,14 +53,15 @@ async def lifespan(app: FastAPI):
     print("🛑 Shutting down...")
 
 
+# ---------- FastAPI app ----------
 app = FastAPI(
-    title="Boréal Marche Retention + Recommendation API",
-    version="1.2.0",
+    title="Boréal Marche Retention + Recommendation + Assistant API",
+    version="1.3.0",
     lifespan=lifespan
 )
 
 
-# ---------- Schemas ----------
+# ---------- Request/Response schemas ----------
 class CustomerFeatures(BaseModel):
     model_config = ConfigDict(extra='forbid')
 
@@ -89,16 +98,24 @@ class RecommendRequest(BaseModel):
     n: int = 5
 
 
+class ChatRequest(BaseModel):
+    model_config = ConfigDict(extra='forbid')
+    question: str = Field(..., description="Question in French or English")
+    provider: Literal["rule", "openai", "ollama"] = "rule"
+    language: Literal["en", "fr"] = "en"
+
+
 # ---------- Endpoints ----------
 @app.api_route("/", methods=["GET", "HEAD"])
 async def root():
     return {
-        "message": "Boréal Marché Retention + Recommendation API",
+        "message": "Boréal Marché API (Head A + B + C)",
         "docs": "/docs",
         "status": "/status",
         "predict": "/predict",
         "recommend": "/recommend",
-        "version": "1.2.0"
+        "chat": "/chat",
+        "version": "1.3.0"
     }
 
 
@@ -113,7 +130,8 @@ async def info():
         "retention_model": "Logistic_Regression_Calibrated",
         "n_features": len(ml_bundle['feature_columns']),
         "optimal_threshold": ml_bundle['optimal_threshold'],
-        "recommendation_engine": ml_bundle['engine'].stats()
+        "recommendation_engine": ml_bundle['engine'].stats(),
+        "assistant_providers": ["rule", "openai", "ollama"]
     }
 
 
@@ -159,6 +177,19 @@ async def predict_batch(customers: List[CustomerFeatures]):
 async def recommend(request: RecommendRequest):
     try:
         return ml_bundle['engine'].recommend(request.basket, n=request.n)
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+
+@app.post("/chat", response_model=AssistantResponse)
+async def chat(request: ChatRequest):
+    """Bilingual assistant endpoint."""
+    try:
+        return assistant_ask(
+            question=request.question,
+            provider=request.provider,
+            language=request.language
+        )
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 

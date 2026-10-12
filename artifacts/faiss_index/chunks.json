@@ -1,0 +1,127 @@
+{
+  "model": "paraphrase-multilingual-MiniLM-L12-v2",
+  "dimension": 384,
+  "chunk_count": 24,
+  "chunks": [
+    {
+      "text": "# Politique sur les allergènes / Allergens Policy\n\n## 1. Engagement / Commitment\n\nBoréal Marché s'engage à fournir des informations précises sur les allergènes pour tous ses produits.\n\n## 2. Allergènes majeurs / Major Allergens",
+      "source": "allergens.md",
+      "chunk_id": "allergens_chunk_000"
+    },
+    {
+      "text": "s allergènes pour tous ses produits.\n\n## 2. Allergènes majeurs / Major Allergens\n\nLes 11 allergènes majeurs déclarés au Canada :\n1. Arachides\n2. Noix (amandes, noisettes, etc.)\n3. Lait\n4. Œufs\n5. Soja\n6. Blé et autres céréales\n7. Poissons\n8. Crustacés et mollusques\n9. Sésame\n10. Sulfites\n11. Moutarde\n\n## 3. Étiquetage / Labelling",
+      "source": "allergens.md",
+      "chunk_id": "allergens_chunk_001"
+    },
+    {
+      "text": "et mollusques\n9. Sésame\n10. Sulfites\n11. Moutarde\n\n## 3. Étiquetage / Labelling\n\nChaque produit est étiqueté avec :\n- Les allergènes présents\n- La mention \"peut contenir\" si applicable\n- Le pays d'origine\n\n## 4. Produits sans gluten / Gluten-free Products\n\nLes produits sans gluten sont identifiés par un symbole dédié. Attention : ils peuvent être préparés dans des installations partagées.",
+      "source": "allergens.md",
+      "chunk_id": "allergens_chunk_002"
+    },
+    {
+      "text": "e dédié. Attention : ils peuvent être préparés dans des installations partagées.\n\n## 5. Questions sur les allergènes / Allergen Questions\n\nPour toute question, contactez notre équipe à allergens@borealmarche.ca.\n\n## 6. Responsabilité / Liability\n\nBoréal Marché ne peut pas garantir l'absence totale de traces d'allergènes dans les produits non emballés.",
+      "source": "allergens.md",
+      "chunk_id": "allergens_chunk_003"
+    },
+    {
+      "text": "# Politique de livraison / Delivery Policy\n\n## 1. Zones de livraison / Delivery Zones\n\nBoréal Marché livre dans les provinces suivantes :\n- Québec\n- Ontario\n- Nouveau-Brunswick\n- Nouvelle-Écosse\n- Île-du-Prince-Édouard\n\nBoréal Marché delivers to the following provinces:\n- Quebec\n- Ontario\n- New Brunswick\n- Nova Scotia\n- Prince Edward Island\n\n## 2. Délais de livraison / Delivery Times",
+      "source": "delivery.md",
+      "chunk_id": "delivery_chunk_000"
+    },
+    {
+      "text": "- Nova Scotia\n- Prince Edward Island\n\n## 2. Délais de livraison / Delivery Times\n\n| Région | Délai standard | Délai express |\n|--------|----------------|---------------|\n| Montréal | 1–2 jours ouvrables | Le jour même (avant 10h) |\n| Québec City | 2–3 jours ouvrables | Le lendemain |\n| Ontario | 3–5 jours ouvrables | 2 jours |\n| Maritimes | 4–6 jours ouvrables | 3 jours |",
+      "source": "delivery.md",
+      "chunk_id": "delivery_chunk_001"
+    },
+    {
+      "text": "| 3–5 jours ouvrables | 2 jours |\n| Maritimes | 4–6 jours ouvrables | 3 jours |\n\n## 3. Frais de livraison / Delivery Fees\n\n- Commandes de moins de 50 $ : 9,99 $\n- Commandes entre 50 $ et 99 $ : 4,99 $\n- Commandes de 100 $ et plus : **gratuit**\n- Livraison express : supplément de 15 $\n\n## 4. Suivi de commande / Order Tracking",
+      "source": "delivery.md",
+      "chunk_id": "delivery_chunk_002"
+    },
+    {
+      "text": "Livraison express : supplément de 15 $\n\n## 4. Suivi de commande / Order Tracking\n\nChaque commande reçoit un numéro de suivi par courriel. Les clients peuvent suivre leur commande en temps réel via leur compte.\n\n## 5. Problèmes de livraison / Delivery Issues",
+      "source": "delivery.md",
+      "chunk_id": "delivery_chunk_003"
+    },
+    {
+      "text": "e en temps réel via leur compte.\n\n## 5. Problèmes de livraison / Delivery Issues\n\nSi une commande est en retard de plus de 48 heures, contactez-nous à support@borealmarche.ca. Un remboursement partiel ou un crédit sera offert.\n\n## 6. Créneaux de livraison / Delivery Slots",
+      "source": "delivery.md",
+      "chunk_id": "delivery_chunk_004"
+    },
+    {
+      "text": "partiel ou un crédit sera offert.\n\n## 6. Créneaux de livraison / Delivery Slots\n\nLes clients peuvent choisir un créneau de 2 heures lors de la commande :\n- Matin : 8h–12h\n- Après-midi : 12h–17h\n- Soir : 17h–21h",
+      "source": "delivery.md",
+      "chunk_id": "delivery_chunk_005"
+    },
+    {
+      "text": "# Programme de fidélité / Loyalty Program\n\n## 1. Adhésion / Membership\n\nLe programme de fidélité Boréal+ est gratuit et ouvert à tous les clients.\n\n## 2. Points / Points\n\nLes clients gagnent :\n- 1 point par dollar dépensé\n- 5 points par avis laissé\n- 20 points par parrainage\n\n## 3. Niveaux / Tiers",
+      "source": "loyalty.md",
+      "chunk_id": "loyalty_chunk_000"
+    },
+    {
+      "text": "nsé\n- 5 points par avis laissé\n- 20 points par parrainage\n\n## 3. Niveaux / Tiers\n\n| Niveau | Points requis | Avantages |\n|--------|---------------|-----------|\n| Bronze | 0–499 | Livraison gratuite dès 75 $ |\n| Argent | 500–1,499 | 5% de réduction sur les fruits et légumes |\n| Or | 1,500–4,999 | 10% de réduction sur toute la commande |\n| Platine | 5,000+ | Livraison express gratuite + accès prioritaire |",
+      "source": "loyalty.md",
+      "chunk_id": "loyalty_chunk_001"
+    },
+    {
+      "text": "commande |\n| Platine | 5,000+ | Livraison express gratuite + accès prioritaire |\n\n## 4. Utilisation des points / Redeeming Points\n\n- 100 points = 5 $ de réduction\n- 200 points = 12 $ de réduction\n- 500 points = 35 $ de réduction\n\n## 5. Expiration / Expiration\n\nLes points expirent après **24 mois** d'inactivité.\n\n## 6. Conditions / Terms",
+      "source": "loyalty.md",
+      "chunk_id": "loyalty_chunk_002"
+    },
+    {
+      "text": "n\n\nLes points expirent après **24 mois** d'inactivité.\n\n## 6. Conditions / Terms\n\nBoréal Marché se réserve le droit de modifier le programme avec un préavis de 30 jours.",
+      "source": "loyalty.md",
+      "chunk_id": "loyalty_chunk_003"
+    },
+    {
+      "text": "# Politique de confidentialité / Privacy Policy\n\n## 1. Données collectées / Data Collected\n\nBoréal Marché collecte :\n- Nom, adresse, courriel, téléphone\n- Historique de commandes\n- Préférences alimentaires\n- Données de navigation\n\n## 2. Utilisation des données / Use of Data",
+      "source": "privacy.md",
+      "chunk_id": "privacy_chunk_000"
+    },
+    {
+      "text": "limentaires\n- Données de navigation\n\n## 2. Utilisation des données / Use of Data\n\nLes données sont utilisées pour :\n- Traiter les commandes\n- Personnaliser les recommandations\n- Envoyer des offres promotionnelles\n- Améliorer le service\n\n## 3. Partage des données / Data Sharing",
+      "source": "privacy.md",
+      "chunk_id": "privacy_chunk_001"
+    },
+    {
+      "text": "promotionnelles\n- Améliorer le service\n\n## 3. Partage des données / Data Sharing\n\nNous ne vendons **jamais** vos données. Nous les partageons uniquement avec :\n- Nos partenaires de livraison\n- Nos processeurs de paiement\n- Les autorités si requis par la loi\n\n## 4. Vos droits (Loi 25) / Your Rights (Law 25)",
+      "source": "privacy.md",
+      "chunk_id": "privacy_chunk_002"
+    },
+    {
+      "text": "autorités si requis par la loi\n\n## 4. Vos droits (Loi 25) / Your Rights (Law 25)\n\nVous avez le droit de :\n- Accéder à vos données\n- Demander la correction\n- Demander la suppression\n- Refuser la personnalisation\n- Demander une révision humaine d'une décision automatisée\n\n## 5. Sécurité / Security\n\nLes données sont chiffrées en transit et au repos.\n\n## 6. Contact / Contact",
+      "source": "privacy.md",
+      "chunk_id": "privacy_chunk_003"
+    },
+    {
+      "text": "ity\n\nLes données sont chiffrées en transit et au repos.\n\n## 6. Contact / Contact\n\nPour exercer vos droits : privacy@borealmarche.ca\n\n## 7. Décisions automatisées / Automated Decisions\n\nNotre système utilise l'IA pour :\n- Prédire la fidélité des clients\n- Recommander des produits\n- Répondre aux questions\n\nCes décisions sont **révisées par un humain** avant toute action.",
+      "source": "privacy.md",
+      "chunk_id": "privacy_chunk_004"
+    },
+    {
+      "text": "# Politique de retours / Returns Policy\n\n## 1. Délai de retour / Return Window\n\nLes clients peuvent retourner un article dans les **14 jours** suivant la réception, à condition qu'il soit **non utilisé** et dans son emballage d'origine.\n\nCustomers may return an item within **14 days** of receipt, provided it is **unused** and in its original packaging.",
+      "source": "returns.md",
+      "chunk_id": "returns_chunk_000"
+    },
+    {
+      "text": "**14 days** of receipt, provided it is **unused** and in its original packaging.\n\n## 2. Articles non retournables / Non-returnable Items\n\nLes articles suivants **ne peuvent pas** être retournés :\n- Produits alimentaires ouverts\n- Produits périssables\n- Cartes-cadeaux\n- Articles personnalisés\n\n## 3. Procédure de retour / Return Process",
+      "source": "returns.md",
+      "chunk_id": "returns_chunk_001"
+    },
+    {
+      "text": "tes-cadeaux\n- Articles personnalisés\n\n## 3. Procédure de retour / Return Process\n\n1. Connectez-vous à votre compte.\n2. Sélectionnez la commande et l'article à retourner.\n3. Imprimez l'étiquette de retour prépayée.\n4. Déposez le colis au point de collecte le plus proche.\n\n## 4. Remboursement / Refund",
+      "source": "returns.md",
+      "chunk_id": "returns_chunk_002"
+    },
+    {
+      "text": "osez le colis au point de collecte le plus proche.\n\n## 4. Remboursement / Refund\n\nLe remboursement est effectué sur le mode de paiement original dans les **5 à 7 jours ouvrables** après réception du retour.\n\n## 5. Articles défectueux / Defective Items",
+      "source": "returns.md",
+      "chunk_id": "returns_chunk_003"
+    },
+    {
+      "text": "rables** après réception du retour.\n\n## 5. Articles défectueux / Defective Items\n\nSi un article est arrivé endommagé ou défectueux, contactez-nous dans les **48 heures** à returns@borealmarche.ca. Nous remplacerons l'article gratuitement.\n\n## 6. Retours en magasin / In-store Returns\n\nLes articles peuvent également être retournés dans nos points de retrait participants.",
+      "source": "returns.md",
+      "chunk_id": "returns_chunk_004"
+    }
+  ]
+}

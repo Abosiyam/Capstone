@@ -111,3 +111,65 @@ def test_recommend_no_match(client):
 def test_recommend_extra_field_forbidden(client):
     response = client.post("/recommend", json={"basket": ["84997C"], "n": 5, "invalid": "fail"})
     assert response.status_code == 422
+    # ============================================================================
+# Head C – Assistant Tests
+# ============================================================================
+
+def test_chat_policy_question(client):
+    """Policy question should return a grounded answer."""
+    response = client.post("/chat", json={
+        "question": "What is your return policy?",
+        "provider": "rule",
+        "language": "en"
+    })
+    assert response.status_code == 200
+    data = response.json()
+    assert "answer" in data
+    assert data["provider"] == "rule"
+    assert data["refused"] is False
+
+
+def test_chat_out_of_scope(client):
+    """Out-of-scope question should be refused."""
+    response = client.post("/chat", json={
+        "question": "What is the weather tomorrow?",
+        "provider": "rule",
+        "language": "en"
+    })
+    assert response.status_code == 200
+    data = response.json()
+    assert data["refused"] is True
+    assert data["reason"] == "out_of_scope"
+
+
+def test_chat_french(client):
+    """French question should work."""
+    response = client.post("/chat", json={
+        "question": "Quelle est votre politique de retour ?",
+        "provider": "rule",
+        "language": "fr"
+    })
+    assert response.status_code == 200
+    data = response.json()
+    assert data["provider"] == "rule"
+
+
+def test_chat_invalid_provider(client):
+    """Invalid provider should be rejected by Pydantic (422)."""
+    response = client.post("/chat", json={
+        "question": "Hello",
+        "provider": "invalid_provider",
+        "language": "en"
+    })
+    assert response.status_code == 422
+
+
+def test_chat_extra_field(client):
+    """Extra fields should be rejected (422)."""
+    response = client.post("/chat", json={
+        "question": "Hello",
+        "provider": "rule",
+        "language": "en",
+        "extra": "field"
+    })
+    assert response.status_code == 422
