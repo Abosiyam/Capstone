@@ -8,7 +8,10 @@ __pycache__/
 venv/
 .venv/
 env/
-data/
+data/raw/
+data/silver/
+data/features/
+data/splits/
 mlruns/
 *.joblib
 *.parquet

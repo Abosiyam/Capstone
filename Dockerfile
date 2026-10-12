@@ -29,10 +29,9 @@ COPY --from=builder /root/.local /home/appuser/.local
 # Copy application code
 COPY app.py .
 COPY src/ ./src/
-COPY artifacts/ ./artifacts/
 COPY docs/ ./docs/
-COPY data/ ./data/
-
+COPY artifacts/ ./artifacts/
+COPY data/golden_set.json ./data/golden_set.json
 RUN chown -R appuser:appuser /app
 
 USER appuser
