@@ -79,7 +79,48 @@ else:
 # ---------- Alerts ----------
 st.markdown("---")
 st.subheader("🚦 Alerts")
+# ---------- Drift Monitoring ----------
+st.markdown("---")
+st.subheader("📉 Data Drift Monitoring")
 
+DRIFT_REPORT_PATH = Path('artifacts/drift_report.json')
+if DRIFT_REPORT_PATH.exists():
+    with open(DRIFT_REPORT_PATH, 'r') as f:
+        drift_report = json.load(f)
+
+    summary = drift_report['summary']
+
+    # Traffic light
+    status_color = {"green": "🟢", "yellow": "🟡", "red": "🔴"}
+    overall = summary['overall_status']
+
+    col1, col2, col3, col4 = st.columns(4)
+    with col1:
+        st.metric("🟢 Green", summary['green'])
+    with col2:
+        st.metric("🟡 Yellow", summary['yellow'])
+    with col3:
+        st.metric("🔴 Red", summary['red'])
+    with col4:
+        st.metric("Overall", f"{status_color.get(overall, '')} {overall.upper()}")
+
+    # Top drifting features
+    st.markdown("**Top drifting features (by PSI):**")
+    features = sorted(drift_report['features'], key=lambda x: x['psi'], reverse=True)[:10]
+    drift_df = pd.DataFrame([
+        {
+            'Feature': f['feature'],
+            'PSI': f['psi'],
+            'KS': f['ks'],
+            'Status': f"{status_color.get(f['status'], '')} {f['status']}"
+        }
+        for f in features
+    ])
+    st.dataframe(drift_df, use_container_width=True)
+
+    st.caption(f"Last computed: {drift_report['timestamp'][:19]}")
+else:
+    st.info("No drift report yet. Run `python src/drift_monitor.py` first.")
 alerts = []
 if metrics["errors"] > 5:
     alerts.append(("🔴 High Error Rate", f"{metrics['errors']} errors detected"))

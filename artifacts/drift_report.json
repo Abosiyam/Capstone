@@ -1,0 +1,196 @@
+{
+  "timestamp": "2026-10-13T15:47:06.558416",
+  "reference_size": 2324,
+  "current_size": 1000,
+  "n_features_checked": 22,
+  "summary": {
+    "green": 3,
+    "yellow": 13,
+    "red": 6,
+    "overall_status": "red"
+  },
+  "features": [
+    {
+      "feature": "order_count",
+      "psi": 0.0064,
+      "ks": 0.1325,
+      "psi_status": "green",
+      "ks_status": "red",
+      "status": "red"
+    },
+    {
+      "feature": "total_orders",
+      "psi": 0.0193,
+      "ks": 0.071,
+      "psi_status": "green",
+      "ks_status": "yellow",
+      "status": "yellow"
+    },
+    {
+      "feature": "total_items",
+      "psi": 0.0079,
+      "ks": 0.0365,
+      "psi_status": "green",
+      "ks_status": "green",
+      "status": "green"
+    },
+    {
+      "feature": "avg_items_per_order",
+      "psi": 0.0267,
+      "ks": 0.0735,
+      "psi_status": "green",
+      "ks_status": "yellow",
+      "status": "yellow"
+    },
+    {
+      "feature": "std_items_per_order",
+      "psi": 0.0283,
+      "ks": 0.0627,
+      "psi_status": "green",
+      "ks_status": "yellow",
+      "status": "yellow"
+    },
+    {
+      "feature": "total_spend",
+      "psi": 0.0182,
+      "ks": 0.0592,
+      "psi_status": "green",
+      "ks_status": "yellow",
+      "status": "yellow"
+    },
+    {
+      "feature": "avg_spend_per_order",
+      "psi": 0.0693,
+      "ks": 0.1141,
+      "psi_status": "green",
+      "ks_status": "red",
+      "status": "red"
+    },
+    {
+      "feature": "max_order_value",
+      "psi": 0.057,
+      "ks": 0.1344,
+      "psi_status": "green",
+      "ks_status": "red",
+      "status": "red"
+    },
+    {
+      "feature": "min_order_value",
+      "psi": 0.0218,
+      "ks": 0.1049,
+      "psi_status": "green",
+      "ks_status": "red",
+      "status": "red"
+    },
+    {
+      "feature": "days_since_last_purchase",
+      "psi": 0.0166,
+      "ks": 0.0629,
+      "psi_status": "green",
+      "ks_status": "yellow",
+      "status": "yellow"
+    },
+    {
+      "feature": "customer_lifetime_days",
+      "psi": 0.0318,
+      "ks": 0.0644,
+      "psi_status": "green",
+      "ks_status": "yellow",
+      "status": "yellow"
+    },
+    {
+      "feature": "order_frequency_days",
+      "psi": 0.0157,
+      "ks": 0.05,
+      "psi_status": "green",
+      "ks_status": "yellow",
+      "status": "yellow"
+    },
+    {
+      "feature": "avg_days_between_orders",
+      "psi": 0.0314,
+      "ks": 0.0686,
+      "psi_status": "green",
+      "ks_status": "yellow",
+      "status": "yellow"
+    },
+    {
+      "feature": "avg_basket_size",
+      "psi": 0.0284,
+      "ks": 0.0746,
+      "psi_status": "green",
+      "ks_status": "yellow",
+      "status": "yellow"
+    },
+    {
+      "feature": "unique_products_bought",
+      "psi": 0.0262,
+      "ks": 0.0709,
+      "psi_status": "green",
+      "ks_status": "yellow",
+      "status": "yellow"
+    },
+    {
+      "feature": "product_diversity",
+      "psi": 0.0514,
+      "ks": 0.1,
+      "psi_status": "green",
+      "ks_status": "red",
+      "status": "red"
+    },
+    {
+      "feature": "pct_drink",
+      "psi": 0.023,
+      "ks": 0.0624,
+      "psi_status": "green",
+      "ks_status": "yellow",
+      "status": "yellow"
+    },
+    {
+      "feature": "pct_food",
+      "psi": 0.0066,
+      "ks": 0.0333,
+      "psi_status": "green",
+      "ks_status": "green",
+      "status": "green"
+    },
+    {
+      "feature": "pct_gift",
+      "psi": 0.0433,
+      "ks": 0.0714,
+      "psi_status": "green",
+      "ks_status": "yellow",
+      "status": "yellow"
+    },
+    {
+      "feature": "pct_household",
+      "psi": 0.0071,
+      "ks": 0.0364,
+      "psi_status": "green",
+      "ks_status": "green",
+      "status": "green"
+    },
+    {
+      "feature": "pct_office",
+      "psi": 0.0183,
+      "ks": 0.0571,
+      "psi_status": "green",
+      "ks_status": "yellow",
+      "status": "yellow"
+    },
+    {
+      "feature": "pct_other",
+      "psi": 0.3382,
+      "ks": 0.2306,
+      "psi_status": "red",
+      "ks_status": "red",
+      "status": "red"
+    }
+  ],
+  "thresholds": {
+    "psi_safe": 0.1,
+    "psi_warning": 0.2,
+    "ks_safe": 0.05,
+    "ks_warning": 0.1
+  }
+}
