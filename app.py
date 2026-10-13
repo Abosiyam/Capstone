@@ -15,7 +15,7 @@ import json
 from contextlib import asynccontextmanager
 
 from src.recommendation_engine import RecommendationEngine
-from src.assistant import ask as assistant_ask, AssistantResponse
+
 
 # ---------- Global objects (loaded once at startup) ----------
 ml_bundle = {}
@@ -181,15 +181,18 @@ async def recommend(request: RecommendRequest):
         raise HTTPException(status_code=400, detail=str(e))
 
 
-@app.post("/chat", response_model=AssistantResponse)
+@app.post("/chat")
 async def chat(request: ChatRequest):
-    """Bilingual assistant endpoint."""
+    """Bilingual assistant endpoint (lazy-loads heavy dependencies)."""
     try:
-        return assistant_ask(
+        # Lazy import: only load heavy libs when /chat is actually called
+        from src.assistant import ask as assistant_ask
+        response = assistant_ask(
             question=request.question,
             provider=request.provider,
             language=request.language
         )
+        return response
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 

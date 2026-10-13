@@ -1,8 +1,5 @@
 # ============================================================================
-# src/assistant_index.py – Retrieval Index for Head C
-# ============================================================================
-# Loads policy documents, chunks them, embeds with a multilingual model,
-# and builds a FAISS index for fast retrieval.
+# src/assistant_index.py – Retrieval Index for Head C (fastembed version)
 # ============================================================================
 
 import json
@@ -11,7 +8,7 @@ from pathlib import Path
 from typing import List, Dict
 import numpy as np
 
-from sentence_transformers import SentenceTransformer
+from fastembed import TextEmbedding
 import faiss
 
 # ---------- Paths ----------
@@ -21,9 +18,9 @@ INDEX_PATH = INDEX_DIR / 'index.faiss'
 CHUNKS_PATH = INDEX_DIR / 'chunks.json'
 
 # ---------- Model ----------
-EMBEDDING_MODEL = 'paraphrase-multilingual-MiniLM-L12-v2'
-CHUNK_SIZE = 400       # approximate characters per chunk
-CHUNK_OVERLAP = 80     # overlap between consecutive chunks
+EMBEDDING_MODEL = 'sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2'
+CHUNK_SIZE = 400
+CHUNK_OVERLAP = 80
 
 
 def load_documents() -> Dict[str, str]:
@@ -42,7 +39,6 @@ def load_documents() -> Dict[str, str]:
 
 def chunk_text(text: str, source: str) -> List[Dict]:
     """Split text into overlapping chunks by paragraph boundaries."""
-    # Split by double newlines (paragraphs)
     paragraphs = re.split(r'\n\s*\n', text)
     chunks = []
     buffer = ""
@@ -52,18 +48,15 @@ def chunk_text(text: str, source: str) -> List[Dict]:
         if not para:
             continue
 
-        # If adding this paragraph exceeds chunk size, flush buffer
         if len(buffer) + len(para) > CHUNK_SIZE and buffer:
             chunks.append({
                 'text': buffer.strip(),
                 'source': source
             })
-            # Keep overlap from previous buffer
             buffer = buffer[-CHUNK_OVERLAP:] + "\n\n" + para
         else:
             buffer = buffer + "\n\n" + para if buffer else para
 
-    # Flush remaining
     if buffer.strip():
         chunks.append({
             'text': buffer.strip(),
@@ -78,7 +71,6 @@ def build_chunks(docs: Dict[str, str]) -> List[Dict]:
     all_chunks = []
     for source, text in docs.items():
         chunks = chunk_text(text, source)
-        # Add sequential chunk_id
         for i, chunk in enumerate(chunks):
             chunk['chunk_id'] = f"{source.replace('.md', '')}_chunk_{i:03d}"
         all_chunks.extend(chunks)
@@ -90,19 +82,18 @@ def build_chunks(docs: Dict[str, str]) -> List[Dict]:
 def build_index(chunks: List[Dict]) -> None:
     """Embed chunks and build FAISS index."""
     print(f"\n🔧 Loading embedding model: {EMBEDDING_MODEL}")
-    model = SentenceTransformer(EMBEDDING_MODEL)
+    model = TextEmbedding(model_name=EMBEDDING_MODEL)
 
     print(f"🔧 Embedding {len(chunks)} chunks...")
     texts = [c['text'] for c in chunks]
-    embeddings = model.encode(texts, show_progress_bar=True, convert_to_numpy=True)
-    embeddings = embeddings.astype('float32')
+    embeddings = np.array(list(model.embed(texts)), dtype='float32')
 
     # Normalise for cosine similarity
     faiss.normalize_L2(embeddings)
 
     # Build index
     dim = embeddings.shape[1]
-    index = faiss.IndexFlatIP(dim)  # Inner product (cosine after normalization)
+    index = faiss.IndexFlatIP(dim)
     index.add(embeddings)
 
     # Save
@@ -125,7 +116,7 @@ def build_index(chunks: List[Dict]) -> None:
 
 def main():
     print("=" * 60)
-    print("Head C – Building Retrieval Index")
+    print("Head C – Building Retrieval Index (fastembed)")
     print("=" * 60)
 
     docs = load_documents()
