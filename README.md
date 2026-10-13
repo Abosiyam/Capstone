@@ -16,7 +16,8 @@
 
 | Service | URL |
 |---------|-----|
-| **API (all heads)** | [https://boreal-marche-api-latest-1.onrender.com](https://boreal-marche-api-latest-1.onrender.com) |
+| **Frontend (Interactive)** | [https://boreal-marche-frontend.streamlit.app](https://boreal-marche-frontend.streamlit.app) |
+| **API (Head A + B + C)** | [https://boreal-marche-api-latest-1.onrender.com](https://boreal-marche-api-latest-1.onrender.com) |
 | **API Docs (Swagger)** | [https://boreal-marche-api-latest-1.onrender.com/docs](https://boreal-marche-api-latest-1.onrender.com/docs) |
 | **Monitoring Dashboard** | [https://bibe6vpgewedpjfv7emsae.streamlit.app](https://bibe6vpgewedpjfv7emsae.streamlit.app) |
 
@@ -26,8 +27,6 @@
 - `POST /chat` – Bilingual assistant (Head C)
 - `GET /status` – Health check
 - `GET /info` – Model metadata
----
-
 ## 📊 Results at a Glance
 
 | Metric | Value |
