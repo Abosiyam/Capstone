@@ -16,10 +16,16 @@
 
 | Service | URL |
 |---------|-----|
-| **API** | https://capstone-bkg2.onrender.com |
-| **API Docs (Swagger)** | https://capstone-bkg2.onrender.com/docs |
-| **Monitoring Dashboard** | https://bibe6vpgewedpjfv7emsae.streamlit.app |
+| **API (all heads)** | [https://boreal-marche-api-latest-1.onrender.com](https://boreal-marche-api-latest-1.onrender.com) |
+| **API Docs (Swagger)** | [https://boreal-marche-api-latest-1.onrender.com/docs](https://boreal-marche-api-latest-1.onrender.com/docs) |
+| **Monitoring Dashboard** | [https://bibe6vpgewedpjfv7emsae.streamlit.app](https://bibe6vpgewedpjfv7emsae.streamlit.app) |
 
+**Available endpoints:**
+- `POST /predict` – Retention prediction (Head A)
+- `POST /recommend` – Product recommendations (Head B)
+- `POST /chat` – Bilingual assistant (Head C)
+- `GET /status` – Health check
+- `GET /info` – Model metadata
 ---
 
 ## 📊 Results at a Glance
