@@ -1,5 +1,5 @@
 # ============================================================================
-# app.py – FastAPI for Boréal Marché Retention + Recommendation + Assistant
+# app.py – FastAPI for Boréal Marché (Head A + B + C) with Logging
 # ============================================================================
 
 import sys
@@ -15,20 +15,18 @@ import json
 from contextlib import asynccontextmanager
 
 from src.recommendation_engine import RecommendationEngine
+from src.prediction_logger import log_request, Timer
 
-
-# ---------- Global objects (loaded once at startup) ----------
+# ---------- Global objects ----------
 ml_bundle = {}
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    """Load model, rules, and assistant ONCE at startup."""
     print("=" * 60)
     print("🚀 Starting Boréal Marché API (Head A + B + C)")
     print("=" * 60)
 
-    # ---------- Load retention model ----------
     MODEL_PATH = Path('artifacts/final_model.joblib')
     METADATA_PATH = Path('artifacts/deployment_metadata.json')
 
@@ -42,10 +40,8 @@ async def lifespan(app: FastAPI):
     print(f"✅ Model loaded: {len(ml_bundle['feature_columns'])} features, "
           f"threshold={ml_bundle['optimal_threshold']}")
 
-    # ---------- Load recommendation engine ----------
     ml_bundle['engine'] = RecommendationEngine()
     print("✅ Recommendation engine loaded")
-
     print("=" * 60)
 
     yield
@@ -53,15 +49,14 @@ async def lifespan(app: FastAPI):
     print("🛑 Shutting down...")
 
 
-# ---------- FastAPI app ----------
 app = FastAPI(
     title="Boréal Marche Retention + Recommendation + Assistant API",
-    version="1.3.0",
+    version="1.4.1",
     lifespan=lifespan
 )
 
 
-# ---------- Request/Response schemas ----------
+# ---------- Schemas ----------
 class CustomerFeatures(BaseModel):
     model_config = ConfigDict(extra='forbid')
 
@@ -115,7 +110,7 @@ async def root():
         "predict": "/predict",
         "recommend": "/recommend",
         "chat": "/chat",
-        "version": "1.3.0"
+        "version": "1.4.1"
     }
 
 
@@ -137,10 +132,15 @@ async def info():
 
 @app.post("/predict")
 async def predict(customer: CustomerFeatures):
-    try:
-        data = customer.model_dump()
-        X = pd.DataFrame([data])
+    input_data = customer.model_dump()
+    timer = Timer()
+    timer.__enter__()
+    status_code = 200
+    error_msg = None
+    result = None
 
+    try:
+        X = pd.DataFrame([input_data])
         missing = [c for c in ml_bundle['feature_columns'] if c not in X.columns]
         if missing:
             raise ValueError(f"Missing columns: {missing}")
@@ -149,52 +149,104 @@ async def predict(customer: CustomerFeatures):
         prob = ml_bundle['model'].predict_proba(X)[0][1]
         decision = "Send coupon" if prob >= ml_bundle['optimal_threshold'] else "No coupon"
 
-        return {
+        result = {
             "probability": round(float(prob), 4),
             "threshold": ml_bundle['optimal_threshold'],
             "decision": decision
         }
     except Exception as e:
-        raise HTTPException(status_code=400, detail=str(e))
+        status_code = 400
+        error_msg = str(e)
+    finally:
+        timer.__exit__(None, None, None)
+        log_request("/predict", input_data, result, timer.latency_ms, status_code, error_msg)
+
+    if error_msg:
+        raise HTTPException(status_code=400, detail=error_msg)
+    return result
 
 
 @app.post("/predict/batch")
 async def predict_batch(customers: List[CustomerFeatures]):
+    inputs = [c.model_dump() for c in customers]
+    timer = Timer()
+    timer.__enter__()
+    status_code = 200
+    error_msg = None
+    results = None
+
     try:
         results = []
-        for customer in customers:
-            data = customer.model_dump()
+        for data in inputs:
             X = pd.DataFrame([data])[ml_bundle['feature_columns']]
             prob = ml_bundle['model'].predict_proba(X)[0][1]
             decision = "Send coupon" if prob >= ml_bundle['optimal_threshold'] else "No coupon"
             results.append({"probability": round(float(prob), 4), "decision": decision})
-        return {"results": results}
     except Exception as e:
-        raise HTTPException(status_code=400, detail=str(e))
+        status_code = 400
+        error_msg = str(e)
+    finally:
+        timer.__exit__(None, None, None)
+        log_request("/predict/batch", {"count": len(inputs)},
+                    {"count": len(results)} if results else None,
+                    timer.latency_ms, status_code, error_msg)
+
+    if error_msg:
+        raise HTTPException(status_code=400, detail=error_msg)
+    return {"results": results}
 
 
 @app.post("/recommend")
 async def recommend(request: RecommendRequest):
+    input_data = request.model_dump()
+    timer = Timer()
+    timer.__enter__()
+    status_code = 200
+    error_msg = None
+    result = None
+
     try:
-        return ml_bundle['engine'].recommend(request.basket, n=request.n)
+        result = ml_bundle['engine'].recommend(request.basket, n=request.n)
     except Exception as e:
-        raise HTTPException(status_code=400, detail=str(e))
+        status_code = 400
+        error_msg = str(e)
+    finally:
+        timer.__exit__(None, None, None)
+        log_request("/recommend", input_data, result, timer.latency_ms, status_code, error_msg)
+
+    if error_msg:
+        raise HTTPException(status_code=400, detail=error_msg)
+    return result
 
 
 @app.post("/chat")
 async def chat(request: ChatRequest):
-    """Bilingual assistant endpoint (lazy-loads heavy dependencies)."""
+    input_data = request.model_dump()
+    timer = Timer()
+    timer.__enter__()
+    status_code = 200
+    error_msg = None
+    response = None
+
     try:
-        # Lazy import: only load heavy libs when /chat is actually called
         from src.assistant import ask as assistant_ask
         response = assistant_ask(
             question=request.question,
             provider=request.provider,
             language=request.language
         )
-        return response
     except Exception as e:
-        raise HTTPException(status_code=400, detail=str(e))
+        status_code = 400
+        error_msg = str(e)
+    finally:
+        timer.__exit__(None, None, None)
+        log_request("/chat", input_data,
+                    response.model_dump() if response else None,
+                    timer.latency_ms, status_code, error_msg)
+
+    if error_msg:
+        raise HTTPException(status_code=400, detail=error_msg)
+    return response
 
 
 # ---------- Run ----------
