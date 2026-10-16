@@ -1,0 +1,16 @@
+{
+  "model_type": "LogisticRegression_Calibrated",
+  "hyperparameters": {
+    "C": 0.0187,
+    "solver": "lbfgs",
+    "max_iter": 190
+  },
+  "metrics": {
+    "pr_auc": 0.7787,
+    "roc_auc": 0.7158,
+    "brier": 0.2102
+  },
+  "n_features": 23,
+  "n_train_samples": 2324,
+  "n_test_samples": 997
+}
