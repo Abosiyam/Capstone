@@ -1,0 +1,18 @@
+{
+  "model_name": "boreal-marche-retention",
+  "registered_at": "fa5aa96a8ac243dea13f1e614c7452a4",
+  "num_versions": 1,
+  "latest_version": 1,
+  "promotion_passed": false,
+  "promotion_issues": [
+    "Fairness gap -0.3733 < -0.1"
+  ],
+  "metrics": {
+    "pr_auc": 0.7803,
+    "roc_auc": 0.7191,
+    "brier": 0.209,
+    "optimal_threshold": 0.01,
+    "expected_profit": 100232.0,
+    "worst_fairness_gap": -0.3733
+  }
+}
