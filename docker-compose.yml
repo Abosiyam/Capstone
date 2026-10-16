@@ -1,0 +1,62 @@
+# ============================================================================
+# docker-compose.yml – Boréal Marché full stack
+# ============================================================================
+# Brings up three services with a single command:
+#   docker compose up
+#
+#   - api       : FastAPI backend (Head A + B + C)
+#   - frontend  : Streamlit interactive UI
+#   - dashboard : Streamlit monitoring dashboard
+# ============================================================================
+
+services:
+
+  # ---------- API (FastAPI) ----------
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: abosiyam/boreal-marche-api:latest
+    container_name: boreal-api
+    ports:
+      - "8000:8000"
+    environment:
+      - API_BASE_URL=http://localhost:8000
+    volumes:
+      - ./artifacts:/app/artifacts:ro
+      - ./docs:/app/docs:ro
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/status"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+    restart: unless-stopped
+
+  # ---------- Frontend (Streamlit) ----------
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: boreal-frontend
+    ports:
+      - "8501:8501"
+    environment:
+      - API_BASE=http://api:8000
+    depends_on:
+      - api
+    restart: unless-stopped
+
+  # ---------- Monitoring Dashboard (Streamlit) ----------
+  dashboard:
+    build:
+      context: .
+      dockerfile: dashboard/Dockerfile
+    container_name: boreal-dashboard
+    ports:
+      - "8502:8502"
+    volumes:
+      - ./artifacts:/app/artifacts:ro
+    depends_on:
+      - api
+    restart: unless-stopped
