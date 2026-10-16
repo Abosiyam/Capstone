@@ -1,0 +1,12 @@
+{
+  "evaluated_baskets": 3530,
+  "our_hit_rate@5": 0.0496,
+  "popularity_hit_rate@5": 0.0079,
+  "improvement": 0.0416,
+  "coverage": 0.0074,
+  "top_n": 5,
+  "min_support": 0.02,
+  "min_confidence": 0.3,
+  "min_lift": 1.5,
+  "timestamp": "2026-10-16T11:26:14.296497"
+}
