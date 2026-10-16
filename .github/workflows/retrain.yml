@@ -1,0 +1,165 @@
+# ============================================================================
+# Scheduled Retraining Workflow
+# ============================================================================
+# Runs weekly (and on demand) to:
+#   1. Re-run ETL
+#   2. Re-mine association rules
+#   3. Retrain the retention model
+#   4. Log to MLflow
+#   5. Open a pull request with the new metrics if the model improves.
+#
+# IMPORTANT: This workflow NEVER deploys. A human must review and merge.
+# ============================================================================
+
+name: Scheduled Retraining
+
+on:
+  # Run every Sunday at 03:00 UTC
+  schedule:
+    - cron: '0 3 * * 0'
+
+  # Allow manual triggering from the GitHub UI
+  workflow_dispatch:
+
+jobs:
+  retrain:
+    name: Retrain Models
+    runs-on: ubuntu-latest
+
+    # Required for creating a pull request
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      # ---------- 1. Checkout ----------
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # ---------- 2. Python setup ----------
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest
+
+      # ---------- 3. Re-run ETL ----------
+      - name: Re-run data cleaning
+        run: |
+          echo "Running ETL..."
+          # Placeholder: replace with real ETL when data source is connected
+          python -c "print('ETL step placeholder')"
+
+      # ---------- 4. Re-mine association rules ----------
+      - name: Re-mine association rules
+        run: |
+          echo "Mining rules..."
+          # Skip if data not available in CI
+          if [ -f "data/silver/online_retail_ii_clean.parquet" ]; then
+            cd src && python recommendation.py
+            cd ..
+          else
+            echo "Data not available - skipping rule mining"
+          fi
+
+      # ---------- 5. Retrain the retention model ----------
+      - name: Retrain retention model
+        run: |
+          echo "Retraining model..."
+          cd src && python sagemaker_train.py
+          cd ..
+
+      # ---------- 6. Run tests ----------
+      - name: Run tests
+        run: |
+          pytest tests/ -v -k "not chat"
+
+      # ---------- 7. Compare metrics and open a PR ----------
+      - name: Check for metric improvement
+        id: check
+        run: |
+          python - <<'EOF'
+          import json
+          from pathlib import Path
+
+          # Load new metrics
+          new_meta_path = Path('artifacts/sagemaker_output/metadata.json')
+          if not new_meta_path.exists():
+              print("improved=false")
+              with open("$GITHUB_OUTPUT", "a") as f:
+                  f.write("improved=false\n")
+              exit(0)
+
+          with open(new_meta_path) as f:
+              new_meta = json.load(f)
+
+          new_pr_auc = new_meta['metrics']['pr_auc']
+
+          # Baseline (current champion)
+          baseline_pr_auc = 0.7803
+
+          print(f"New PR-AUC:      {new_pr_auc:.4f}")
+          print(f"Baseline PR-AUC: {baseline_pr_auc:.4f}")
+          print(f"Improvement:     {new_pr_auc - baseline_pr_auc:+.4f}")
+
+          # Promotion policy: must be >= baseline AND above 0.75
+          improved = (new_pr_auc >= baseline_pr_auc) and (new_pr_auc >= 0.75)
+
+          with open("$GITHUB_OUTPUT", "a") as f:
+              f.write(f"improved={'true' if improved else 'false'}\n")
+              f.write(f"new_pr_auc={new_pr_auc}\n")
+          EOF
+
+      # ---------- 8. Create PR if improved ----------
+      - name: Create Pull Request
+        if: steps.check.outputs.improved == 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: |
+            Weekly retraining: model improved to PR-AUC ${{ steps.check.outputs.new_pr_auc }}
+          branch: retrain/weekly-${{ github.run_number }}
+          title: "🤖 Weekly Retraining – Model Improvement Detected"
+          body: |
+            ## Automated Retraining Report
+
+            The weekly retraining workflow has produced a new model with improved metrics.
+
+            | Metric | Value |
+            |--------|-------|
+            | **New PR-AUC** | ${{ steps.check.outputs.new_pr_auc }} |
+            | **Previous PR-AUC** | 0.7803 |
+            | **Promotion policy threshold** | 0.75 |
+
+            ### ⚠️ Human review required
+
+            This PR was opened automatically. **It will NOT be merged automatically.**
+            Please review the following before merging:
+
+            - [ ] New PR-AUC is above 0.75
+            - [ ] Fairness audit has been re-run (see `GOVERNANCE_LOI25.md`)
+            - [ ] Drift report is acceptable
+            - [ ] No regression in any metric
+
+            After review and approval, merge this PR to trigger the next deployment.
+
+            _Auto-generated by `.github/workflows/retrain.yml`_
+          labels: |
+            retraining
+            automated
+            needs-review
+          delete-branch: true
+
+      # ---------- 9. Log the outcome ----------
+      - name: Report result
+        run: |
+          if [ "${{ steps.check.outputs.improved }}" == "true" ]; then
+            echo "✅ Improvement detected. PR opened."
+          else
+            echo "ℹ️ No improvement. No PR created."
+          fi
