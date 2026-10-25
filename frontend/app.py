@@ -257,7 +257,7 @@ elif section == t['basket']:
         if "recs" in st.session_state and st.session_state.recs is not None:
             result = st.session_state.recs
             strategy = result.get('strategy')
-            st.info(f"Strategy: **{strategy}**")
+            #st.info(f"Strategy: **{strategy}**")
 
             recs = result.get('recommendations', [])
             if not recs:
