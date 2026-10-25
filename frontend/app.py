@@ -225,26 +225,33 @@ elif section == t['basket']:
 
     with col1:
         st.subheader("🛒 Your Basket")
-        basket_text = st.text_area(
-            t['basket_input'],
-            value="84997C",
-            height=200
+        
+        # Load product catalog to map names to codes
+        import json
+        from pathlib import Path
+        catalog_path = Path(__file__).parent.parent / 'artifacts' / 'product_catalog.json'
+        catalog = {}
+        if catalog_path.exists():
+            with open(catalog_path, 'r', encoding='utf-8') as f:
+                catalog = json.load(f)
+                
+        # Create options for dropdown (Name (Code))
+        product_options = {f"{v['description']} ({k})": k for k, v in catalog.items()}
+        
+        # Default selection (84997C = BLUE 3 PIECE MINI DOTS CUTLERY SET)
+        default_label = [label for label, code in product_options.items() if code == "84997C"]
+        
+        selected_products = st.multiselect(
+            "Select products to add to your basket:",
+            options=list(product_options.keys()),
+            default=default_label if default_label else []
         )
+        
         n_recs = st.slider("Number of recommendations", 1, 10, 5)
 
         if st.button(t['get_recommendations'], type="primary"):
-            basket = [line.strip() for line in basket_text.split("\n") if line.strip()]
-            if not basket:
-                st.warning("Basket is empty.")
-            else:
-                with st.spinner(t['loading']):
-                    result = call_api("/recommend", "POST", {"basket": basket, "n": n_recs})
-                if "error" in result:
-                    st.error(f"{t['error']}: {result['error']}")
-                else:
-                    st.session_state.basket = basket
-                    st.session_state.recs = result
-
+            # Convert selected product names back to StockCodes
+            basket = [product_options[p] for p in selected_products]
     with col2:
         st.subheader("💡 " + t['recommendations'])
         if "recs" in st.session_state:
