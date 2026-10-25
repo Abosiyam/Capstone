@@ -214,17 +214,18 @@ if section == t['prediction']:
 elif section == t['basket']:
     st.header(t['basket'])
 
+    # Load catalog once for this section
+    catalog_path = Path(__file__).parent.parent / 'artifacts' / 'product_catalog.json'
+    catalog = {}
+    if catalog_path.exists():
+        with open(catalog_path, 'r', encoding='utf-8') as f:
+            catalog = json.load(f)
+
     col1, col2 = st.columns(2)
 
     with col1:
         st.subheader("🛒 Your Basket")
         
-        catalog_path = Path(__file__).parent.parent / 'artifacts' / 'product_catalog.json'
-        catalog = {}
-        if catalog_path.exists():
-            with open(catalog_path, 'r', encoding='utf-8') as f:
-                catalog = json.load(f)
-                
         product_options = {f"{v['description']} ({k})": k for k, v in catalog.items()}
         default_label = [label for label, code in product_options.items() if code == "84997C"]
         
@@ -264,9 +265,17 @@ elif section == t['basket']:
             else:
                 for rec in recs:
                     with st.container():
-                        st.markdown(f"### 📦 `{rec['item']}`")
+                        # Look up the product name for the recommended item
+                        item_code = rec['item']
+                        item_name = catalog.get(item_code, {}).get('description', 'Unknown Product')
+                        
+                        # Look up the product names for the 'because' list
+                        because_names = [catalog.get(c, {}).get('description', c) for c in rec['because']]
+                        
+                        st.markdown(f"### 📦 {item_name}")
+                        st.caption(f"Code: `{item_code}`")
                         st.markdown(f"**Lift:** {rec['lift']:.2f} | **Confidence:** {rec['confidence']:.2%}")
-                        st.caption(f"Because you added: {', '.join(rec['because'])}")
+                        st.caption(f"Because you added: {', '.join(because_names)}")
                         st.markdown("---")
         else:
             st.info("Select products and click 'Get Recommendations' to see results.")
