@@ -3,7 +3,7 @@
 .env
 venv/
 *.log
-data/
+
 artifacts/
 *.db
 .DS_Store
