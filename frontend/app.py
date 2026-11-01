@@ -190,23 +190,23 @@ if section == t['prediction']:
             "top_country": "United Kingdom"
         }
 
-        if st.button(t['predict'], type="primary"):
-            with st.spinner(t['loading']):
-                result = call_api("/predict", "POST", payload)
-            if "error" in result:
-                st.error(f"{t['error']}: {result['error']}")
+               # LIVE WHAT-IF: This will run automatically when sliders move
+        with st.spinner(t['loading']):
+            result = call_api("/predict", "POST", payload)
+        
+        if "error" in result:
+            st.error(f"{t['error']}: {result['error']}")
+        else:
+            prob = result.get('probability', 0)
+            decision = result.get('decision', '')
+            threshold = result.get('threshold', 0.5)
+
+            st.metric(t['probability'], f"{prob:.2%}")
+            st.metric(t['threshold'], f"{threshold}")
+            if decision == "Send coupon":
+                st.success(t['send_coupon'])
             else:
-                prob = result.get('probability', 0)
-                decision = result.get('decision', '')
-                threshold = result.get('threshold', 0.5)
-
-                st.metric(t['probability'], f"{prob:.2%}")
-                st.metric(t['threshold'], f"{threshold}")
-                if decision == "Send coupon":
-                    st.success(t['send_coupon'])
-                else:
-                    st.warning(t['no_coupon'])
-
+                st.warning(t['no_coupon'])
 
 # ============================================================================
 # Section 2 – Basket & Recommendations
