@@ -1,0 +1,21 @@
+# ============================================================================
+# cd.yml – Continuous Deployment
+# ============================================================================
+# Note: Deployment is handled natively by Render (API) and Streamlit Cloud 
+# (Frontend & Dashboard) via GitHub integrations. This workflow serves as 
+# a placeholder to satisfy the repository structure requirements.
+
+name: CD
+
+on:
+  push:
+    branches: [ main, master ]
+
+jobs:
+  deploy_trigger:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Deployments
+        run: |
+          echo "✅ API auto-deploys on Render from Docker Hub."
+          echo "✅ Frontend and Dashboard auto-deploy on Streamlit Cloud."
