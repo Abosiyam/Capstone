@@ -46,3 +46,9 @@ Les clients peuvent choisir un créneau de 2 heures lors de la commande :
 - Matin : 8h–12h
 - Après-midi : 12h–17h
 - Soir : 17h–21h
+## 7. Livraison en zones rurales / Rural Delivery
+Pour les codes postaux commençant par G, J, ou X, les livraisons peuvent prendre jusqu'à 7 jours ouvrables. Un supplément de 5 $ s'applique pour les adresses situées à plus de 50 km d'un centre de distribution.
+## 8. Emballage écologique / Eco-friendly Packaging
+Tous nos colis sont emballés dans des matériaux 100% recyclés. Si vous recevez des produits frais, ils sont transportés dans des sacs isothermes biodégradables. Veuillez laisser vos sacs isothermes à votre livreur lors de la prochaine commande.
+## 9. Échec de livraison / Failed Delivery
+Si le livreur ne peut pas remettre le colis (adresse incorrecte, absence), un avis de passage sera laissé. Le colis sera retourné à notre entrepôt. Des frais de réexpédition de 12 $ seront facturés pour un nouvel envoi.

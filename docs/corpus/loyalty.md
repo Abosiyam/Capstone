@@ -33,3 +33,9 @@ Les points expirent après **24 mois** d'inactivité.
 ## 6. Conditions / Terms
 
 Boréal Marché se réserve le droit de modifier le programme avec un préavis de 30 jours.
+## 7. Anniversaire du client / Customer Birthday
+Les membres reçoivent un coupon de 10 $ valide pendant le mois de leur anniversaire. Ce coupon ne peut pas être combiné avec d'autres promotions.
+## 8. Parrainage / Referral Program
+Pour chaque nouvel ami parrainé qui passe une première commande de 50 $ ou plus, vous recevrez 2 000 points (l'équivalent de 20 $ de réduction) et votre ami recevra 15 $ de réduction sur sa première commande.
+## 9. Expiration des niveaux / Tier Expiration
+Pour maintenir votre statut Or ou Platine, vous devez effectuer au moins 12 commandes par année civile. Si ce seuil n'est pas atteint, votre compte sera rétrogradé au niveau inférieur au début de la nouvelle année.

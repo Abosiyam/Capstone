@@ -37,3 +37,9 @@ Pour toute question, contactez notre équipe à allergens@borealmarche.ca.
 ## 6. Responsabilité / Liability
 
 Boréal Marché ne peut pas garantir l'absence totale de traces d'allergènes dans les produits non emballés.
+## 7. Contamination croisée / Cross-Contamination
+Nos installations manipulent des arachides, des noix, du lait, du blé, du soja, des œufs, des crustacés et du sésame. Bien que nous prenions des mesures strictes de nettoyage, nous ne pouvons pas garantir l'absence totale de traces.
+## 8. Produits casher et halal / Kosher and Halal
+Les produits certifiés Casher et Halal sont clairement identifiés sur notre site web avec les logos correspondants. Ces produits proviennent de fournisseurs certifiés indépendants.
+## 9. Gluten et régime sans allergènes / Gluten-Free
+Les produits étiquetés "sans gluten" contiennent moins de 20 parties par million (ppm) de gluten, conformément aux normes de Santé Canada.

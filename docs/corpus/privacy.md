@@ -48,3 +48,9 @@ Notre système utilise l'IA pour :
 - Répondre aux questions
 
 Ces décisions sont **révisées par un humain** avant toute action.
+## 8. Cookies et traceurs / Cookies and Trackers
+Nous utilisons des cookies essentiels pour le fonctionnement du site (panier, connexion) et des cookies analytiques (Google Analytics) pour comprendre comment nos clients naviguent. Vous pouvez désactiver les cookies analytiques dans les paramètres de votre navigateur sans affecter l'expérience d'achat.
+## 9. Conservation des données / Data Retention
+Les données de transaction sont conservées pendant 7 ans pour des raisons fiscales et comptables. Les profils clients inactifs depuis plus de 3 ans sont anonymisés automatiquement.
+## 10. Transfert international / International Transfer
+Vos données sont hébergées sur des serveurs sécurisés au Canada. Dans le cas d'un service tiers (comme le traitement des paiements), nous nous assurons que le fournisseur respecte les normes de protection des données équivalentes à la Loi 25 du Québec.

@@ -32,3 +32,9 @@ Si un article est arrivé endommagé ou défectueux, contactez-nous dans les **4
 ## 6. Retours en magasin / In-store Returns
 
 Les articles peuvent également être retournés dans nos points de retrait participants.
+## 7. Articles en solde / Sale Items
+Les articles achetés en solde (réduction de 50% ou plus) ne sont pas admissibles à un remboursement, mais peuvent être échangés contre un crédit en magasin dans les 14 jours.
+## 8. Produits électroniques / Electronics
+Les articles électroniques (thermomètres, balances de cuisine) doivent être retournés non ouverts. Si l'emballage est scellé par le fabricant et a été ouvert, des frais de restocking de 15% s'appliquent.
+## 9. Retours pendant les fêtes / Holiday Returns
+Pour les achats effectués entre le 1er novembre et le 24 décembre, la période de retour est prolongée jusqu'au 15 janvier de l'année suivante, sur présentation du reçu original.
