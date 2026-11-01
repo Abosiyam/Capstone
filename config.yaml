@@ -1,0 +1,16 @@
+# ============================================================================
+# config.yaml – Project Configuration
+# ============================================================================
+
+data:
+  # Observation window (used to compute features)
+  observation_start: "2009-12-01"
+  cutoff_date: "2010-09-01"
+  
+  # Label window (used to define the target)
+  label_window_days: 90
+
+model:
+  target_name: "target"
+  primary_metric: "pr_auc"
+  optimal_threshold: 0.01
